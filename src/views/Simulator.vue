@@ -1,17 +1,21 @@
 <template>
-	<div class="sim">
-		<SimulatorToolbar></SimulatorToolbar>
-		<SimulatorSkillTree></SimulatorSkillTree>
-		<SimulatorInfo></SimulatorInfo>
+	<div>
+		<!-- <SimulatorToolbar></SimulatorToolbar> -->
+		<simulator-skill-tree></simulator-skill-tree>
+		<!-- <SimulatorInfo></SimulatorInfo> -->
 	</div>
 </template>
 
 <script>
 import Vue from "vue";
 import Component from "vue-class-component";
-import SimulatorToolbar from "@/components/SimulatorToolbar.vue";
+import SimulatorSkillTree from "@/components/SimulatorSkillTree";
 
-@Component
+@Component({
+	components: {
+		SimulatorSkillTree,
+	},
+})
 export default class Simulator extends Vue {}
 </script>
 

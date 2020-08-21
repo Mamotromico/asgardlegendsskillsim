@@ -1,4 +1,4 @@
-export default Merchant = {
+export const Merchant = {
 	AxeMastery: {
 		AdditionalInfo: "",
 		Description: "",

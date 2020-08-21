@@ -1,4 +1,4 @@
-export default Alchemist = {
+export const Alchemist = {
 	LearningPotion: {
 		AdditionalInfo: "",
 		Description: "",

@@ -1,4 +1,4 @@
-export default Novice = {
+export const Novice = {
 	BasicSkill: {
 		AdditionalInfo: "",
 		Description: "",

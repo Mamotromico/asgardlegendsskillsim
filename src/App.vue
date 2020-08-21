@@ -1,15 +1,22 @@
 <template>
-	<div id="app">
-		<router-view />
-	</div>
+	<v-app>
+		<v-app-bar app>
+			<router-link to="/">Home</router-link>
+		</v-app-bar>
+		<v-main>
+			<v-container fluid>
+				<router-view />
+			</v-container>
+		</v-main>
+	</v-app>
 </template>
 
-<style lang="scss" scoped>
-#app {
-	font-family: Avenir, Helvetica, Arial, sans-serif;
-	-webkit-font-smoothing: antialiased;
-	-moz-osx-font-smoothing: grayscale;
-	text-align: center;
-	color: #2c3e50;
-}
-</style>
+<script lang="ts">
+import Vue from "vue";
+import Component from "vue-class-component";
+
+@Component({})
+export default class App extends Vue {}
+</script>
+
+<style lang="scss" scoped></style>
