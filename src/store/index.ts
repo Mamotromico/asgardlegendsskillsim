@@ -5,8 +5,8 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
 	state: {
-		totalJP:0,
-		skillTree: {}
+		totalJP: 0,
+		skillTree: {},
 	},
 	getters: {
 		getTotalJP: (state) => {
@@ -15,7 +15,7 @@ export default new Vuex.Store({
 	},
 	mutations: {
 		spendJP(state: { totalJP: number }, payload: { cost: number }) {
-			state.totalJP -= payload.cost;		
+			state.totalJP -= payload.cost;
 		},
 		refundJP(state: { totalJP: number }, payload: { cost: number }) {
 			state.totalJP += payload.cost;
@@ -26,8 +26,6 @@ export default new Vuex.Store({
 	},
 	actions: {
 		spendJP({ commit }: any, payload: any) {
-			console.log("spending")
-			console.log(payload)
 			commit(payload);
 		},
 		refundJP({ commit }: any, payload: any) {
