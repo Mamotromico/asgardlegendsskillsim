@@ -1,7 +1,10 @@
 <template>
 	<div>
 		<router-link to="/sim/Novice">Novice</router-link>
+		<router-link to="/sim/Merchant">Merchant</router-link>
 		<router-link to="/sim/Acolyte">Acolyte</router-link>
+		<router-link to="/sim/Alchemist">Alchemist</router-link>
+		<router-link to="/sim/Priest">Priest</router-link>
 	</div>
 </template>
 

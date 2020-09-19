@@ -3,36 +3,71 @@ import Vuex from "vuex";
 
 Vue.use(Vuex);
 
+function retrieveJobList(job: any, jobList: Array<any>) {
+	if (job.preRequisite != null) {
+		retrieveJobList(job.preRequisite, jobList);
+		jobList.push(job);
+	} else {
+		jobList.push(job);
+	}
+	return;
+}
+
+function retrieveJPValues(jobList: Array<any>, jpList: Array<number>) {
+	for (let entry in jobList) {
+		jpList[entry] = jobList[entry].totalJP;
+	}
+	return;
+}
+
 export default new Vuex.Store({
 	state: {
-		totalJP: 0,
-		skillTree: {},
+		jobs: [],
+		JPs: [],
 	},
 	getters: {
 		getTotalJP: (state) => {
-			return state.totalJP;
+			return state.JPs;
+		},
+
+		getJobList: (state) => {
+			return state.jobs;
 		},
 	},
 	mutations: {
-		spendJP(state: { totalJP: number }, payload: { cost: number }) {
-			state.totalJP -= payload.cost;
+		refundJP(state: any, cost: number) {
+			state.JP += cost;
 		},
-		refundJP(state: { totalJP: number }, payload: { cost: number }) {
-			state.totalJP += payload.cost;
+
+		spendJP(state: any, cost: number) {
+			state.JP -= cost;
 		},
-		setJP(state: { totalJP: number }, payload: { total: number }) {
-			state.totalJP = payload.total;
+
+		setJobJP(state: any, JPList: any) {
+			state.JPs = JPList;
+		},
+
+		setJobList(state: any, jobList: any) {
+			state.jobs = jobList;
 		},
 	},
 	actions: {
-		spendJP({ commit }: any, payload: any) {
-			commit(payload);
+		spendJP({ commit }: any, cost: any) {
+			commit("spendJP", cost);
 		},
-		refundJP({ commit }: any, payload: any) {
-			commit(payload);
+
+		refundJP({ commit }: any, cost: any) {
+			commit("refundJP", cost);
 		},
-		setJP({ commit }: any, payload: any) {
-			commit(payload);
+
+		setJobs({ commit }: any, job: any) {
+			let jobList: Array<any> = [];
+			let jpList: Array<number> = [];
+			retrieveJobList(job, jobList);
+			commit("setJobList", jobList);
+
+			retrieveJPValues(jobList, jpList);
+			commit("setJobJP", jpList);
 		},
 	},
 	modules: {},

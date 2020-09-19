@@ -1,8 +1,10 @@
-import { Merchant } from './Merchant';
+import { Merchant } from "./Merchant";
 
 export const Alchemist = {
+	name: "Alchemist",
+	tier: 2,
 	totalJP: 54,
-	preRequisites: "Merchant",
+	preRequisite: Merchant,
 	skillTree: {
 		LearningPotion: {
 			AdditionalInfo: "",
@@ -10,7 +12,7 @@ export const Alchemist = {
 			Form: "",
 			FormulaInfo: "",
 			MaxLv: 10,
-			Name: "",
+			Name: "Learning Potion",
 			PreRequisites: [],
 		},
 		Pharmacy: {
@@ -19,7 +21,7 @@ export const Alchemist = {
 			Form: "",
 			FormulaInfo: "",
 			MaxLv: 10,
-			Name: "",
+			Name: "Pharmacy",
 			PreRequisites: [
 				{
 					LearningPotion: 5,
@@ -32,7 +34,7 @@ export const Alchemist = {
 			Form: "",
 			FormulaInfo: "",
 			MaxLv: 1,
-			Name: "",
+			Name: "Sphere Mine",
 			PreRequisites: [],
 		},
 	},

@@ -1,5 +1,5 @@
 <template>
-	<v-card hover>
+	<v-card width="250">
 		<v-container>
 			<v-row>
 				<v-col align-self="center" cols="auto">
@@ -41,6 +41,7 @@
 	export default class SimulatorSkillBox extends Vue {
 		@Prop(String) readonly name!: string;
 		@Prop(Number) readonly maxLevel!: number;
+		@Prop(Number) readonly tier!: number;
 
 		level = 0;
 
@@ -65,19 +66,11 @@
 		}
 
 		levelUp() {
-			this.level++;
-			this.$store.dispatch({
-				type: "spendJP",
-				cost: 1,
-			});
+			this.$store.dispatch("spendJP", { cost: 1 });
 		}
 
 		levelDown() {
-			this.level--;
-			this.$store.dispatch({
-				type: "refundJP",
-				cost: 1,
-			});
+			this.$store.dispatch("refundJP", { cost: 1 });
 		}
 	}
 </script>

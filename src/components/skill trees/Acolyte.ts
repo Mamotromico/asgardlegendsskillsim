@@ -1,6 +1,8 @@
 export const Acolyte = {
+	name: "Acolyte",
+	tier: 1,
 	totalJP: 54,
-	preRequisites: "Novice",
+	preRequisite: null,
 	skillTree: {
 		Angelus: {
 			AdditionalInfo: "",

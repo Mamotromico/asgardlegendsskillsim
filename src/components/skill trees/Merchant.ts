@@ -1,6 +1,8 @@
 export const Merchant = {
+	name: "Merchant",
+	tier: 1,
 	totalJP: 54,
-	preRequisites: "Novice",
+	preRequisite: null,
 	skillTree: {
 		AxeMastery: {
 			AdditionalInfo: "",
@@ -8,7 +10,7 @@ export const Merchant = {
 			Form: "",
 			FormulaInfo: "",
 			MaxLv: 10,
-			Name: "",
+			Name: "Axe Mastery",
 			PreRequisites: [],
 		},
 		CartRevolution: {
@@ -17,16 +19,16 @@ export const Merchant = {
 			Form: "",
 			FormulaInfo: "",
 			MaxLv: 1,
-			Name: "",
+			Name: "Cart Revolution",
 			PreRequisites: [],
 		},
-		CurseTomahawk: {
+		CursedTomahawk: {
 			AdditionalInfo: "",
 			Description: "",
 			Form: "",
 			FormulaInfo: "",
 			MaxLv: 5,
-			Name: "",
+			Name: "Cursed Tomahawk",
 			PreRequisites: [],
 		},
 		Efficiency: {
@@ -35,7 +37,7 @@ export const Merchant = {
 			Form: "",
 			FormulaInfo: "",
 			MaxLv: 5,
-			Name: "",
+			Name: "Efficiency",
 			PreRequisites: [],
 		},
 		EnlargeWeightLimit: {
@@ -44,7 +46,7 @@ export const Merchant = {
 			Form: "",
 			FormulaInfo: "",
 			MaxLv: 10,
-			Name: "",
+			Name: "Enlarge Weight Limit",
 			PreRequisites: [],
 		},
 		FindingOre: {
@@ -53,7 +55,7 @@ export const Merchant = {
 			Form: "",
 			FormulaInfo: "",
 			MaxLv: 1,
-			Name: "",
+			Name: "Finding Ore",
 			PreRequisites: [],
 		},
 		ItemAppraisal: {
@@ -62,7 +64,7 @@ export const Merchant = {
 			Form: "",
 			FormulaInfo: "",
 			MaxLv: 1,
-			Name: "",
+			Name: "Item Appraisal",
 			PreRequisites: [],
 		},
 		Mammonite: {
@@ -71,7 +73,7 @@ export const Merchant = {
 			Form: "",
 			FormulaInfo: "",
 			MaxLv: 10,
-			Name: "",
+			Name: "Mammonite",
 			PreRequisites: [],
 		},
 		PushcartMastery: {
@@ -80,7 +82,7 @@ export const Merchant = {
 			Form: "",
 			FormulaInfo: "",
 			MaxLv: 5,
-			Name: "",
+			Name: "Pushcart Mastery",
 			PreRequisites: [],
 		},
 	},

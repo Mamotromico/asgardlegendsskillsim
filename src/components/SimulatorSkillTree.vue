@@ -1,15 +1,24 @@
 <template>
 	<v-row>
-		<v-col cols="12">
-			Total Skill Points: {{ this.$store.getters.getTotalJP }}
-		</v-col>
-		<v-col
-			cols="auto"
-			v-for="skill in jobList[jobName].skillTree"
-			:key="skill.Name"
-		>
-			<SimulatorSkillBox :name="skill.Name" :maxLevel="skill.MaxLv" />
-		</v-col>
+		<template v-for="(jobEntry, index) in jobList">
+			<v-col cols="12" :key="jobEntry.tier">
+				Total Skill Points: {{ total[index] }}
+			</v-col>
+			<v-col
+				cols="auto"
+				v-for="skill in jobEntry.skillTree"
+				:key="skill.Name"
+			>
+				<SimulatorSkillBox
+					:tier="jobEntry.tier"
+					:name="skill.Name"
+					:maxLevel="skill.MaxLv"
+				/>
+			</v-col>
+			<v-col cols="12" :key="jobEntry.tier">
+				<v-divider />
+			</v-col>
+		</template>
 	</v-row>
 </template>
 
@@ -28,22 +37,22 @@
 	export default class SimulatorSkillTree extends Vue {
 		@Prop(String) readonly jobName!: string;
 
-		jobList: {[key:string]: {
-			totalJP: number,
-			preRequisites: string,
-			skillTree: object
-		}} = Jobs;
+		Jobs: any = Jobs;
+
+		get job() {
+			return this.Jobs[this.jobName];
+		}
+
+		get jobList() {
+			return this.$store.getters.getJobList;
+		}
 
 		get total() {
-			return this.jobList[this.jobName].totalJP;
+			return this.$store.getters.getTotalJP;
 		}
 
 		mounted() {
-			this.$store.dispatch({
-				type: "setJP",
-				total: this.total,
-			});
-			console.log(this.$store.getters.getTotalJP);
+			this.$store.dispatch("setJobs", this.job);
 		}
 	}
 </script>

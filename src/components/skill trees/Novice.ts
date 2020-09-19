@@ -1,6 +1,8 @@
 export const Novice = {
+	name: "Novice",
+	tier: 0,
 	totalJP: 9,
-	preRequisites: "",
+	preRequisite: null,
 	skillTree: {
 		BasicSkill: {
 			AdditionalInfo: "",
@@ -8,7 +10,7 @@ export const Novice = {
 			Form: "",
 			FormulaInfo: "",
 			MaxLv: 1,
-			Name: "",
+			Name: "Basic Skill",
 			PreRequisites: [],
 		},
 		CallMount: {
@@ -17,7 +19,7 @@ export const Novice = {
 			Form: "",
 			FormulaInfo: "",
 			MaxLv: 1,
-			Name: "",
+			Name: "Call Mount",
 			PreRequisites: [],
 		},
 		ChangeCart: {
@@ -26,7 +28,7 @@ export const Novice = {
 			Form: "",
 			FormulaInfo: "",
 			MaxLv: 1,
-			Name: "",
+			Name: "Change Cart",
 			PreRequisites: [],
 		},
 		ItemFinding: {
@@ -35,7 +37,7 @@ export const Novice = {
 			Form: "",
 			FormulaInfo: "",
 			MaxLv: 1,
-			Name: "",
+			Name: "Item Finding",
 			PreRequisites: [],
 		},
 		MonsterMemory: {
@@ -44,7 +46,7 @@ export const Novice = {
 			Form: "",
 			FormulaInfo: "",
 			MaxLv: 1,
-			Name: "",
+			Name: "Monster Memory",
 			PreRequisites: [],
 		},
 		PickUp: {
@@ -53,7 +55,7 @@ export const Novice = {
 			Form: "",
 			FormulaInfo: "",
 			MaxLv: 1,
-			Name: "",
+			Name: "Pick Up",
 			PreRequisites: [],
 		},
 		Pushcart: {
@@ -62,7 +64,7 @@ export const Novice = {
 			Form: "",
 			FormulaInfo: "",
 			MaxLv: 1,
-			Name: "",
+			Name: "Pushcart",
 			PreRequisites: [],
 		},
 		Sense: {
@@ -71,7 +73,7 @@ export const Novice = {
 			Form: "",
 			FormulaInfo: "",
 			MaxLv: 1,
-			Name: "",
+			Name: "Sense",
 			PreRequisites: [],
 		},
 		Vending: {
@@ -80,7 +82,7 @@ export const Novice = {
 			Form: "",
 			FormulaInfo: "",
 			MaxLv: 1,
-			Name: "",
+			Name: "Vending",
 			PreRequisites: [],
 		},
 	},
