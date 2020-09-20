@@ -4,6 +4,8 @@ export const Alchemist = {
 	name: "Alchemist",
 	tier: 2,
 	totalJP: 54,
+	allocatedJP: 0,
+	availableJP: 54,
 	preRequisite: Merchant,
 	skillTree: {
 		LearningPotion: {

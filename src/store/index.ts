@@ -1,5 +1,7 @@
 import Vue from "vue";
 import Vuex from "vuex";
+import Jobs from "@/components/skill trees";
+import { nextTick } from "vue/types/umd";
 
 Vue.use(Vuex);
 
@@ -13,38 +15,65 @@ function retrieveJobList(job: any, jobList: Array<any>) {
 	return;
 }
 
-function retrieveJPValues(jobList: Array<any>, jpList: Array<number>) {
-	for (let entry in jobList) {
-		jpList[entry] = jobList[entry].totalJP;
-	}
-	return;
-}
-
 export default new Vuex.Store({
 	state: {
 		jobs: [],
-		JPs: [],
 	},
 	getters: {
-		getTotalJP: (state) => {
-			return state.JPs;
-		},
-
-		getJobList: (state) => {
+		getJobList: (state: any) => {
 			return state.jobs;
+		},
+		canLevelUp: (state: any) => (tier: number) => {
+			let currentTier = tier - 1;
+			if (state.jobs[currentTier].availableJP > 0) {
+				return true;
+			} else if (state.jobs.length > tier) {
+				if (state.jobs[tier].availableJP > 0) {
+					return true;
+				} else {
+					return false;
+				}
+			} else {
+				return false;
+			}
 		},
 	},
 	mutations: {
-		refundJP(state: any, cost: number) {
-			state.JP += cost;
+		refundAvailableJP(state: any, payload: any) {
+			let currentTier = payload.tier - 1;
+			let nextTier = payload.tier;
+
+			if (
+				state.jobs[currentTier].allocatedJP >=
+				state.jobs[currentTier].totalJP
+			) {
+				state.jobs[nextTier].availableJP += payload.cost;
+			} else {
+				state.jobs[currentTier].availableJP += payload.cost;
+			}
 		},
 
-		spendJP(state: any, cost: number) {
-			state.JP -= cost;
+		spendAvailableJP(state: any, payload: any) {
+			let currentTier = payload.tier - 1;
+			let nextTier = payload.tier;
+
+			if (state.jobs[currentTier].availableJP > 0) {
+				state.jobs[currentTier].availableJP -= payload.cost;
+			} else {
+				state.jobs[nextTier].availableJP -= payload.cost;
+			}
 		},
 
-		setJobJP(state: any, JPList: any) {
-			state.JPs = JPList;
+		removeAllocatedJP(state: any, payload: any) {
+			let currentTier = payload.tier - 1;
+
+			state.jobs[currentTier].allocatedJP -= payload.cost;
+		},
+
+		addAllocatedJP(state: any, payload: any) {
+			let currentTier = payload.tier - 1;
+
+			state.jobs[currentTier].allocatedJP += payload.cost;
 		},
 
 		setJobList(state: any, jobList: any) {
@@ -52,22 +81,33 @@ export default new Vuex.Store({
 		},
 	},
 	actions: {
-		spendJP({ commit }: any, cost: any) {
-			commit("spendJP", cost);
+		spendJP({ commit }: any, payload: any) {
+			commit("addAllocatedJP", {
+				cost: payload.cost,
+				tier: payload.tier,
+			});
+			commit("spendAvailableJP", {
+				cost: payload.cost,
+				tier: payload.tier,
+			});
 		},
 
-		refundJP({ commit }: any, cost: any) {
-			commit("refundJP", cost);
+		refundJP({ commit }: any, payload: any) {
+			commit("removeAllocatedJP", {
+				cost: payload.cost,
+				tier: payload.tier,
+			});
+			commit("refundAvailableJP", {
+				cost: payload.cost,
+				tier: payload.tier,
+			});
 		},
 
 		setJobs({ commit }: any, job: any) {
+			let jobs: any = Jobs;
 			let jobList: Array<any> = [];
-			let jpList: Array<number> = [];
-			retrieveJobList(job, jobList);
+			retrieveJobList(jobs[job], jobList);
 			commit("setJobList", jobList);
-
-			retrieveJPValues(jobList, jpList);
-			commit("setJobJP", jpList);
 		},
 	},
 	modules: {},

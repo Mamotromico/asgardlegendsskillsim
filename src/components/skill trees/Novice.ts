@@ -2,6 +2,8 @@ export const Novice = {
 	name: "Novice",
 	tier: 0,
 	totalJP: 9,
+	allocatedJP: 0,
+	availableJP: 54,
 	preRequisite: null,
 	skillTree: {
 		BasicSkill: {

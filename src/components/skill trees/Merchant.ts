@@ -2,6 +2,8 @@ export const Merchant = {
 	name: "Merchant",
 	tier: 1,
 	totalJP: 54,
+	allocatedJP: 0,
+	availableJP: 54,
 	preRequisite: null,
 	skillTree: {
 		AxeMastery: {

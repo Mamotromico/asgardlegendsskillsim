@@ -4,6 +4,8 @@ export const Priest = {
 	name: "Priest",
 	tier: 2,
 	totalJP: 54,
+	allocatedJP: 0,
+	availableJP: 54,
 	preRequisite: Acolyte,
 	skillTree: {
 		Aspersio: {

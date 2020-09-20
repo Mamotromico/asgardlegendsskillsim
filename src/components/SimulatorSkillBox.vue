@@ -18,7 +18,7 @@
 						</v-btn>
 						{{ level }} / {{ maxLevel }}
 						<v-btn
-							:disabled="canLevelUp"
+							:disabled="!canLevelUp"
 							@click="levelUp()"
 							icon
 							color="green"
@@ -50,13 +50,10 @@
 		}
 
 		get canLevelUp(): boolean {
-			if (
-				this.level < this.maxLevel &&
-				this.$store.getters.getTotalJP > 0
-			) {
-				return false;
-			}
-			return true;
+			return (
+				this.$store.getters.canLevelUp(this.tier) &&
+				this.level < this.maxLevel
+			);
 		}
 
 		getImgSrc(name: string) {
@@ -66,11 +63,19 @@
 		}
 
 		levelUp() {
-			this.$store.dispatch("spendJP", { cost: 1 });
+			this.$store
+				.dispatch("spendJP", { cost: 1, tier: this.tier })
+				.then(() => {
+					this.level += 1;
+				});
 		}
 
 		levelDown() {
-			this.$store.dispatch("refundJP", { cost: 1 });
+			this.$store
+				.dispatch("refundJP", { cost: 1, tier: this.tier })
+				.then(() => {
+					this.level -= 1;
+				});
 		}
 	}
 </script>
