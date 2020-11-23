@@ -1,5 +1,5 @@
 <template>
-	<v-card width="250">
+	<v-card width="250" :disabled="disabled">
 		<v-container>
 			<v-row>
 				<v-col align-self="center" cols="auto">
@@ -42,6 +42,7 @@
 		@Prop(String) readonly name!: string;
 		@Prop(Number) readonly maxLevel!: number;
 		@Prop(Number) readonly tier!: number;
+		@Prop(Boolean) readonly disabled!: boolean;
 
 		level = 0;
 
@@ -64,7 +65,7 @@
 
 		levelUp() {
 			this.$store
-				.dispatch("spendJP", { cost: 1, tier: this.tier })
+				.dispatch("updateJP", { cost: 1, tier: this.tier })
 				.then(() => {
 					this.level += 1;
 				});
@@ -72,7 +73,7 @@
 
 		levelDown() {
 			this.$store
-				.dispatch("refundJP", { cost: 1, tier: this.tier })
+				.dispatch("updateJP", { cost: -1, tier: this.tier })
 				.then(() => {
 					this.level -= 1;
 				});

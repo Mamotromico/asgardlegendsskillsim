@@ -39,38 +39,29 @@ export default new Vuex.Store({
 		},
 	},
 	mutations: {
-		refundAvailableJP(state: any, payload: any) {
+		updateAvailableJP(state: any, payload: any) {
 			let currentTier = payload.tier - 1;
 			let nextTier = payload.tier;
 
-			if (
-				state.jobs[currentTier].allocatedJP >=
-				state.jobs[currentTier].totalJP
-			) {
-				state.jobs[nextTier].availableJP += payload.cost;
-			} else {
-				state.jobs[currentTier].availableJP += payload.cost;
+			if (payload.cost > 0) {
+				if (state.jobs[currentTier].availableJP > 0) {
+					state.jobs[currentTier].availableJP -= payload.cost;
+				} else {
+					state.jobs[nextTier].availableJP -= payload.cost;
+				}
+			} else if (payload.cost < 0) {
+				if (
+					state.jobs[currentTier].allocatedJP >
+					state.jobs[currentTier].totalJP
+				) {
+					state.jobs[nextTier].availableJP -= payload.cost;
+				} else {
+					state.jobs[currentTier].availableJP -= payload.cost;
+				}
 			}
 		},
 
-		spendAvailableJP(state: any, payload: any) {
-			let currentTier = payload.tier - 1;
-			let nextTier = payload.tier;
-
-			if (state.jobs[currentTier].availableJP > 0) {
-				state.jobs[currentTier].availableJP -= payload.cost;
-			} else {
-				state.jobs[nextTier].availableJP -= payload.cost;
-			}
-		},
-
-		removeAllocatedJP(state: any, payload: any) {
-			let currentTier = payload.tier - 1;
-
-			state.jobs[currentTier].allocatedJP -= payload.cost;
-		},
-
-		addAllocatedJP(state: any, payload: any) {
+		updateAllocatedJP(state: any, payload: any) {
 			let currentTier = payload.tier - 1;
 
 			state.jobs[currentTier].allocatedJP += payload.cost;
@@ -81,23 +72,12 @@ export default new Vuex.Store({
 		},
 	},
 	actions: {
-		spendJP({ commit }: any, payload: any) {
-			commit("addAllocatedJP", {
+		updateJP({ commit }: any, payload: any) {
+			commit("updateAvailableJP", {
 				cost: payload.cost,
 				tier: payload.tier,
 			});
-			commit("spendAvailableJP", {
-				cost: payload.cost,
-				tier: payload.tier,
-			});
-		},
-
-		refundJP({ commit }: any, payload: any) {
-			commit("removeAllocatedJP", {
-				cost: payload.cost,
-				tier: payload.tier,
-			});
-			commit("refundAvailableJP", {
+			commit("updateAllocatedJP", {
 				cost: payload.cost,
 				tier: payload.tier,
 			});
