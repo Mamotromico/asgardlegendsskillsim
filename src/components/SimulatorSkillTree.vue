@@ -11,8 +11,8 @@
 			>
 				<SimulatorSkillBox
 					:tier="jobEntry.tier"
-					:name="skill.Name"
-					:maxLevel="skill.MaxLv"
+					:skill="skill"
+					:requisites="skill.PreRequisites"
 				/>
 			</v-col>
 			<v-col cols="12" :key="jobEntry.tier + 5">

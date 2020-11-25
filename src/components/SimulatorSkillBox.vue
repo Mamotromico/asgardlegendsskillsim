@@ -1,12 +1,12 @@
 <template>
-	<v-card width="250" :disabled="disabled">
+	<v-card width="250" :disabled="!meetRequisites">
 		<v-container>
 			<v-row>
 				<v-col align-self="center" cols="auto">
-					<v-img min-width="36" :src="getImgSrc(name)" />
+					<v-img min-width="36" :src="getImgSrc()" />
 				</v-col>
 				<v-col cols="auto">
-					<div class="text-center">{{ name }}</div>
+					<div class="text-center">{{ skill.Name }}</div>
 					<div class="text-center">
 						<v-btn
 							:disabled="level > 0 ? false : true"
@@ -16,7 +16,7 @@
 						>
 							<v-icon> mdi-minus </v-icon>
 						</v-btn>
-						{{ level }} / {{ maxLevel }}
+						{{ level }} / {{ skill.MaxLv }}
 						<v-btn
 							:disabled="!canLevelUp"
 							@click="levelUp()"
@@ -39,33 +39,42 @@
 
 	@Component({})
 	export default class SimulatorSkillBox extends Vue {
-		@Prop(String) readonly name!: string;
-		@Prop(Number) readonly maxLevel!: number;
+		@Prop(Object) readonly skill!: any;
 		@Prop(Number) readonly tier!: number;
-		@Prop(Boolean) readonly disabled!: boolean;
+		@Prop(Array) readonly requisites!: any;
 
 		level = 0;
-
-		get skillName(): string {
-			return this.name;
-		}
 
 		get canLevelUp(): boolean {
 			return (
 				this.$store.getters.canLevelUp(this.tier) &&
-				this.level < this.maxLevel
+				this.level < this.skill.MaxLv
 			);
 		}
 
-		getImgSrc(name: string) {
+		get meetRequisites(): boolean {
+			return this.requisites.every((entry: any, index: number) => {
+				return this.$store.getters.hasSkillLevel(
+					Object.keys(entry)[index],
+					Object.values(entry)[index]
+				);
+			});
+		}
+
+		getImgSrc() {
 			return require("@/assets/" +
-				this.skillName.split(" ").join("_") +
+				this.skill.Name.split(" ").join("_") +
 				".png");
 		}
 
 		levelUp() {
 			this.$store
-				.dispatch("updateJP", { cost: 1, tier: this.tier })
+				.dispatch("updateJP", {
+					cost: 1,
+					tier: this.tier,
+					skill: this.skill,
+					level: this.level + 1,
+				})
 				.then(() => {
 					this.level += 1;
 				});
@@ -73,7 +82,12 @@
 
 		levelDown() {
 			this.$store
-				.dispatch("updateJP", { cost: -1, tier: this.tier })
+				.dispatch("updateJP", {
+					cost: -1,
+					tier: this.tier,
+					skill: this.skill,
+					level: this.level - 1,
+				})
 				.then(() => {
 					this.level -= 1;
 				});
