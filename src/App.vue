@@ -1,7 +1,7 @@
 <template>
 	<v-app>
 		<v-app-bar app>
-			<router-link to="/">Home</router-link>
+			<SimulatorToolbar />
 		</v-app-bar>
 		<v-main>
 			<v-container fluid>
@@ -12,11 +12,16 @@
 </template>
 
 <script lang="ts">
-import Vue from "vue";
-import Component from "vue-class-component";
+	import Vue from "vue";
+	import Component from "vue-class-component";
+	import SimulatorToolbar from "@/components/SimulatorToolbar.vue";
 
-@Component({})
-export default class App extends Vue {}
+	@Component({
+		components: {
+			SimulatorToolbar,
+		},
+	})
+	export default class App extends Vue {}
 </script>
 
 <style lang="scss" scoped></style>

@@ -1,6 +1,5 @@
 <template>
 	<div>
-		<!-- <SimulatorToolbar></SimulatorToolbar> -->
 		<SimulatorSkillTree :jobName="$route.params.job"></SimulatorSkillTree>
 	</div>
 </template>

@@ -39,8 +39,6 @@ export default new Vuex.Store({
 			}
 		},
 		hasSkillLevel: (state: any) => (skill: any, level: number) => {
-			console.log("Checking skill " + skill);
-			console.log("Level to check " + level);
 			if (state.skills.length > 0) {
 				let skillInState = state.skills.find((sk: any) => {
 					if (sk.Name.split(" ").join("") == skill) {
@@ -51,16 +49,12 @@ export default new Vuex.Store({
 				});
 				if (skillInState) {
 					if (skillInState.Level >= level) {
-						console.log("Returning true");
 						return true;
 					}
-					console.log("Returning false 1");
 					return false;
 				}
-				console.log("Returning false 2");
 				return false;
 			}
-			console.log("Returning false 3");
 			return false;
 		},
 	},
