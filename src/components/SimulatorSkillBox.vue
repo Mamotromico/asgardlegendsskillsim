@@ -1,6 +1,6 @@
 <template>
 	<v-card width="250" :disabled="!meetRequisites">
-		<v-container>
+		<v-container class="px-0 py-0">
 			<v-row justify="space-around">
 				<v-col align-self="center" cols="auto">
 					<v-img min-width="36" :src="getImgSrc()" />

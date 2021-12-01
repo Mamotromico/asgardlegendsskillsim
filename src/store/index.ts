@@ -18,7 +18,7 @@ function retrieveJobList(job: any, jobList: Array<any>) {
 export default new Vuex.Store({
 	state: {
 		jobs: [],
-		skills: [],
+		skills: {},
 	},
 	getters: {
 		getJobList: (state: any) => {
@@ -41,14 +41,14 @@ export default new Vuex.Store({
 		hasSkillLevel: (state: any) => (skill: any, level: number) => {
 			if (state.skills.length > 0) {
 				let skillInState = state.skills.find((sk: any) => {
-					if (sk.Name.split(" ").join("") == skill) {
+					if (sk.name.split(" ").join("") == skill) {
 						return true;
 					} else {
 						return false;
 					}
 				});
 				if (skillInState) {
-					if (skillInState.Level >= level) {
+					if (skillInState.level >= level) {
 						return true;
 					}
 					return false;
@@ -57,6 +57,9 @@ export default new Vuex.Store({
 			}
 			return false;
 		},
+		build: (state: any) => {
+			return state.skills;
+		}
 	},
 	mutations: {
 		updateAvailableJP(state: any, payload: any) {
@@ -92,47 +95,22 @@ export default new Vuex.Store({
 		},
 
 		setAcquiredSkillsList(state: any, payload: any) {
-			if (payload.level == 0) {
-				if (state.skills.length > 0) {
-					if (state.skills.includes(payload.skill)) {
-						state.skills.splice(
-							state.skills.indexOf(
-								state.skills.find((sk: any) => {
-									if (sk.Name == payload.skill.Name) {
-										return true;
-									} else {
-										return false;
-									}
-								})
-							),
-							1
-						);
+			let skillRef = {name: payload.skill.Name, level: payload.level};
+			if (skillRef.level == 0) {
+				if (Object.keys(state.skills).length > 0) {
+					if (skillRef.name in state.skills) {
+						delete state.skills[skillRef.name];
 					}
 				}
-			} else if (payload.level > 0) {
-				if (state.skills.length > 0) {
-					if (state.skills.includes(payload.skill)) {
-						payload.skill.Level = payload.level;
-						state.skills.splice(
-							state.skills.indexOf(
-								state.skills.find((sk: any) => {
-									if (sk.name == payload.skill.Name) {
-										return true;
-									} else {
-										return false;
-									}
-								})
-							),
-							1,
-							payload.skill
-						);
+			} else if (skillRef.level > 0) {
+				if (Object.keys(state.skills).length > 0) {
+					if (skillRef.name in state.skills) {
+						state.skills[skillRef.name] = skillRef.level;
 					} else {
-						payload.skill.Level = payload.level;
-						state.skills.push(payload.skill);
+						state.skills[skillRef.name] = skillRef.level;
 					}
 				} else {
-					payload.skill.Level = payload.level;
-					state.skills.push(payload.skill);
+					state.skills[skillRef.name] = skillRef.level;
 				}
 			}
 		},

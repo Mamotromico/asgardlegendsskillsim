@@ -1,10 +1,8 @@
 <template>
     <v-row>
-        <router-link to="/" tag="v-btn">
-            <v-btn>
-                Home
-            </v-btn>
-        </router-link>
+        <v-btn to="/">
+            Home
+        </v-btn>
         <v-btn @click="saveBuild()">
             Save
         </v-btn>
@@ -22,7 +20,7 @@
     export default class SimulatorToolbar extends Vue {
 
         saveBuild() {
-            console.log('save build');
+            console.log(JSON.stringify(this.$store.getters.build, null, 2));
         }
         
     }
