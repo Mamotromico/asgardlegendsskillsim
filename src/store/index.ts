@@ -1,7 +1,6 @@
 import Vue from "vue";
 import Vuex from "vuex";
 import Jobs from "@/components/skill trees";
-import { nextTick } from "vue/types/umd";
 
 Vue.use(Vuex);
 
@@ -39,21 +38,8 @@ export default new Vuex.Store({
 			}
 		},
 		hasSkillLevel: (state: any) => (skill: any, level: number) => {
-			if (state.skills.length > 0) {
-				let skillInState = state.skills.find((sk: any) => {
-					if (sk.name.split(" ").join("") == skill) {
-						return true;
-					} else {
-						return false;
-					}
-				});
-				if (skillInState) {
-					if (skillInState.level >= level) {
-						return true;
-					}
-					return false;
-				}
-				return false;
+			if (skill in state.skills && state.skills[skill] >= level) {
+				return true;
 			}
 			return false;
 		},
@@ -95,7 +81,8 @@ export default new Vuex.Store({
 		},
 
 		setAcquiredSkillsList(state: any, payload: any) {
-			let skillRef = {name: payload.skill.Name, level: payload.level};
+			let skillNameCC = payload.skill.Name.split(" ").join("")
+			let skillRef = {name: skillNameCC, level: payload.level};
 			if (skillRef.level == 0) {
 				if (Object.keys(state.skills).length > 0) {
 					if (skillRef.name in state.skills) {

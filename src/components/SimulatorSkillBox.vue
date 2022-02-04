@@ -1,11 +1,11 @@
 <template>
 	<v-card width="250" :disabled="!meetRequisites">
-		<v-container class="px-0 py-0">
-			<v-row justify="space-around">
+		<v-container>
+			<v-row class="py-0">
 				<v-col align-self="center" cols="auto">
-					<v-img min-width="36" :src="getImgSrc()" />
+					<v-img min-width="36px" :src="getImgSrc()" />
 				</v-col>
-				<v-col cols="auto">
+				<v-col class="py-1">
 					<div class="text-center">{{ skill.Name }}</div>
 					<div class="text-center">
 						<v-btn
@@ -53,6 +53,7 @@
 		}
 
 		get meetRequisites(): boolean {
+			// console.log("Requisites fo the skill ", this.skill.Name, this.requisites);
 			return this.requisites.every((entry: any, index: number) => {
 				return this.$store.getters.hasSkillLevel(
 					Object.keys(entry)[index],
