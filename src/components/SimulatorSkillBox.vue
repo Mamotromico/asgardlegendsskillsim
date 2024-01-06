@@ -35,13 +35,13 @@
 <script lang="ts">
 	import Vue from "vue";
 	import Component from "vue-class-component";
-	import { Prop } from "vue-property-decorator";
+	import { Prop, Watch } from "vue-property-decorator";
 
 	@Component({})
 	export default class SimulatorSkillBox extends Vue {
 		@Prop(Object) readonly skill!: any;
 		@Prop(Number) readonly tier!: number;
-		@Prop(Array) readonly requisites!: any;
+		@Prop(Array) readonly requisites!: [{skillName: string, level: number}];
 
 		level = 0;
 
@@ -52,14 +52,12 @@
 			);
 		}
 
+		get build(): any {
+			return this.$store.getters.build;
+		}
+
 		get meetRequisites(): boolean {
-			// console.log("Requisites fo the skill ", this.skill.Name, this.requisites);
-			return this.requisites.every((entry: any, index: number) => {
-				return this.$store.getters.hasSkillLevel(
-					Object.keys(entry)[index],
-					Object.values(entry)[index]
-				);
-			});
+			return this.$store.getters.hasPreRequisites(this.requisites);
 		}
 
 		getImgSrc() {

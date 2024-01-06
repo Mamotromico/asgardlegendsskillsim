@@ -1,6 +1,6 @@
 import Vue from "vue";
-import Vuex from "vuex";
-import Jobs from "@/components/skill trees";
+import Vuex, { mapGetters } from "vuex";
+import Jobs from "@/components/trees";
 
 Vue.use(Vuex);
 
@@ -12,6 +12,13 @@ function retrieveJobList(job: any, jobList: Array<any>) {
 		jobList.push(job);
 	}
 	return;
+}
+
+function hasSkillLevel(skills: any, skill: any, level: number) {
+	if (skill in skills && skills[skill] >= level) {
+		return true;
+	}
+	return false;
 }
 
 export default new Vuex.Store({
@@ -37,14 +44,16 @@ export default new Vuex.Store({
 				return false;
 			}
 		},
-		hasSkillLevel: (state: any) => (skill: any, level: number) => {
-			if (skill in state.skills && state.skills[skill] >= level) {
-				return true;
-			}
-			return false;
+		hasSkillLevel: (state: any) => (skill: any, level: number): boolean => {
+			return hasSkillLevel(state, skill, level)
 		},
 		build: (state: any) => {
 			return state.skills;
+		},
+		hasPreRequisites: (state: any) => (requisites: Array<{Name: string, leve: number}>): boolean => {
+			return requisites.every((entry) => {
+				return hasSkillLevel(state.skills, entry.Name, entry.leve);
+			});
 		}
 	},
 	mutations: {
@@ -92,19 +101,18 @@ export default new Vuex.Store({
 			} else if (skillRef.level > 0) {
 				if (Object.keys(state.skills).length > 0) {
 					if (skillRef.name in state.skills) {
-						state.skills[skillRef.name] = skillRef.level;
+						state.skills = {...state.skills, [skillRef.name]: skillRef.level}
 					} else {
-						state.skills[skillRef.name] = skillRef.level;
+						state.skills = {...state.skills, [skillRef.name]: skillRef.level}
 					}
 				} else {
-					state.skills[skillRef.name] = skillRef.level;
+					state.skills = {...state.skills, [skillRef.name]: skillRef.level}
 				}
 			}
 		},
 	},
 	actions: {
 		updateJP({ commit }: any, payload: any) {
-			console.log(payload);
 			commit("updateAvailableJP", {
 				cost: payload.cost,
 				tier: payload.tier,
@@ -117,6 +125,7 @@ export default new Vuex.Store({
 				skill: payload.skill,
 				level: payload.level,
 			});
+			console.log(this.state);
 		},
 
 		setJobs({ commit }: any, job: any) {
